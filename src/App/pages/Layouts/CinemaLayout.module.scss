@@ -1,0 +1,87 @@
+@use '../../../styles/variables' as *;
+
+.page {
+    background: #141414;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 0 16px;
+    border-bottom: 2px solid #222222;
+}
+
+.nav {
+    display: none;
+}
+
+.icons {
+    display: flex;
+    gap: 16px;
+}
+
+.main {
+    flex: 1;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    padding: 24px 16px;
+    margin-top: auto;
+}
+
+@media (min-width: 768px) {
+    .header {
+        height: 80px;
+        padding: 0 40px;
+    }
+
+    .nav {
+        display: flex;
+        gap: $space-xl;
+    }
+
+    .main {
+        padding: 0 40px;
+    }
+
+    .footer {
+        padding: 40px 40px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .header {
+        padding: 0 80px;
+    }
+
+    .main {
+        padding: 0 80px;
+    }
+
+    .footer {
+        padding: 40px 80px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .header {
+        padding: 0 120px;
+    }
+
+    .main {
+        padding: 0 120px;
+    }
+
+    .footer {
+        padding: 40px 120px;
+    }
+}

@@ -1,0 +1,116 @@
+@use '../../../styles/variables' as *;
+
+.page {
+  background: #141414;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.recommendations {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.carouselContainer {
+  position: relative;
+  width: 100%;
+}
+
+.cards {
+  display: flex;
+  gap: 29px;
+  overflow: hidden;
+}
+
+.cards > * {
+  flex: 0 0 380px;
+}
+
+.carouselArrowLeft,
+.carouselArrowRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.carouselArrowLeft {
+  left: -22px;
+}
+
+.carouselArrowRight {
+  right: -22px;
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding: 40px 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main {
+    padding: 48px 64px;
+  }
+
+  .content {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1440px) {
+  .content {
+    max-width: 1320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carouselContainer {
+    display: block;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    overflow: visible;
+  }
+
+  .cards > * {
+    width: 100%;
+  }
+
+  .carouselArrowLeft,
+  .carouselArrowRight {
+    display: none;
+  }
+}

@@ -1,0 +1,54 @@
+.inputContainer {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 12px;
+    gap: 8px;
+
+    height: 52px;
+    background: #181818;
+    border: 1px solid #333333;
+    transition: border-color 0.2s ease;
+
+    &:focus-within {
+        border-color: #518581;
+    }
+}
+
+.disabled {
+    border-color: #FFFFFF;
+    cursor: not-allowed;
+}
+
+.inputField {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    color: #B3B3B3;
+
+    &::placeholder {
+        color: #AFADB5;
+    }
+
+    &:disabled {
+        color: rgba(0, 0, 0, 0.2);
+        cursor: not-allowed;
+    }
+}
+
+.inputAfterSlot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}

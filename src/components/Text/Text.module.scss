@@ -1,0 +1,121 @@
+@use '../../styles/variables' as *;
+
+.text {
+    margin: 0;
+    font-family: $font-family-base;
+    letter-spacing: 0;
+    padding: 0;
+}
+
+/* ========================= */
+/* Views */
+/* ========================= */
+
+.view-title {
+    font-size: 44px;
+    line-height: 48px;
+    font-weight: 700;
+    
+}
+
+.view-p-20 {
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.view-p-20-mono {
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.view-p-18 {
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.view-p-16 {
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.view-p-14 {
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.view-p-24 {
+    font-size: 24px;
+    line-height: 32px;
+}
+
+.view-p-32 {
+    font-size: 32px;
+    line-height: 48px;
+}
+
+.view-button {
+    font-family: $font-family-button;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0;
+    //color: $button-primary-text;
+    //margin: 17px 32px;
+}
+
+.text-back {
+    padding: 12px 13px;
+}
+
+/* ========================= */
+/* Weight */
+/* ========================= */
+
+.weight-normal {
+    font-weight: 400;
+}
+
+.weight-medium {
+    font-weight: 500;
+}
+
+.weight-bold {
+    font-weight: 700;
+}
+
+/* ========================= */
+/* Colors */
+/* ========================= */
+
+.color-primary {
+    color: $color-primary-text;
+}
+
+.color-secondary {
+    color: $color-secondary-text;
+}
+
+.color-accent {
+    color: $color-accent-text;
+}
+
+.color-red {
+    color: $button-primary-bg;
+}
+
+/* ========================= */
+/* Line Clamp */
+/* ========================= */
+
+.clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@for $i from 1 through 10 {
+    .clamp-#{$i} {
+        -webkit-line-clamp: $i;
+    }
+}

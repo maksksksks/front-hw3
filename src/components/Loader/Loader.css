@@ -1,0 +1,28 @@
+.loader {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.loader--accent {
+  filter: brightness(0) invert(1);
+}
+
+.loader--s {
+  width: 24px;
+  height: 24px;
+  background-image: url('./loader-s.svg');
+}
+
+.loader--m {
+  width: 48px;
+  height: 48px;
+  background-image: url('./loader-m.svg');
+}
+
+.loader--l {
+  width: 60px;
+  height: 60px;
+  background-image: url('./loader-l.svg');
+}

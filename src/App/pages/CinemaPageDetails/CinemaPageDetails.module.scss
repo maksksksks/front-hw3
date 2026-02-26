@@ -1,0 +1,107 @@
+@use '@styles/variables' as *;
+
+.page {
+    background: $color-page-bg;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: $space-xl $space-sm;
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
+}
+
+.back {
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    cursor: pointer;
+}
+
+.recommendations {
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+    width: 100%;
+}
+
+.carouselContainer {
+    position: relative;
+    width: 100%;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $space-lg;
+    overflow: visible;
+}
+
+.carouselArrowLeft,
+.carouselArrowRight {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: $carousel-arrow-size;
+    height: $carousel-arrow-size;
+    border-radius: 50%;
+    border: none;
+    background: $color-carousel-arrow-bg;
+    color: $color-carousel-arrow;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.carouselArrowLeft {
+    left: calc(-1 * #{$carousel-arrow-size} / 2);
+}
+
+.carouselArrowRight {
+    right: calc(-1 * #{$carousel-arrow-size} / 2);
+}
+.cards {
+    display: grid;
+    gap: $space-lg;
+    overflow: visible;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax($card-width, $card-width));
+}
+
+@media (min-width: $screen-s) {
+    .cards {
+        grid-template-columns: repeat(auto-fit, minmax($card-width, $card-width));
+    }
+}
+
+@media (min-width: $screen-l) and (max-width: $screen-xl) {
+    .cards {
+        justify-content: space-around;
+        grid-template-columns: repeat(auto-fit, minmax($card-width, $card-width));
+    }
+}
+
+@media (min-width: $screen-xl) {
+    .cards {
+        display: flex;
+        justify-content: space-between;
+        gap: $carousel-gap;
+        overflow: hidden;
+    }
+
+    .cards > * {
+        flex: 0 0 $carousel-card-width;
+    }
+
+    .carouselArrowLeft,
+    .carouselArrowRight {
+        display: block;
+    }
+}

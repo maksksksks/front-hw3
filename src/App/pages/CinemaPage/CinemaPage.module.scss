@@ -2,72 +2,72 @@
 
 .searchInput {
     flex: 1;
-    height: 52px;
+    height: $button-height;
     width: 100%;
-    padding: 16px 12px;
+    padding: $space-md $space-sm;
 
-    background: #181818;
-    border: 1px solid #333333;
-    border-radius: 6px;
+    background: $color-surface-primary;
+    border: 1px solid $color-border-dark;
+    border-radius: $border-radius;
 
-    font-size: 16px;
-    line-height: 20px;
-    color: #FFFFFF;
+    font-size: $font-sm;
+    line-height: $line-height-sm;
+    color: $color-primary-text;
 
     &::placeholder {
-        color: #8C8C8C;
+        color: $color-placeholder;
     }
 
     &:focus {
         outline: none;
-        border-color: #E50914;
+        border-color: $button-primary-bg;
     }
 }
 
 .MultiDropdownFilters {
     flex: 1;
-    height: 52px;
+    height: $button-height;
     width: 100%;
 
-    background: #181818;
-    border: 1px solid #333333;
-    border-radius: 6px;
+    background: $color-surface-primary;
+    border: 1px solid $color-border-dark;
+    border-radius: $border-radius;
 
-    font-size: 16px;
-    line-height: 20px;
-    color: #FFFFFF;
+    font-size: $font-sm;
+    line-height: $line-height-sm;
+    color: $color-primary-text;
 
     &::placeholder {
-        color: #8C8C8C;
+        color: $color-placeholder;
     }
 
     &:focus {
         outline: none;
-        border-color: #E50914;
+        border-color: $button-primary-bg;
     }
 }
 
 .searchButton {
-    height: 52px;
-    min-height: 52px;
+    height: $button-height;
+    min-height: $button-height;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    background: #E50914;
-    border-radius: 6px;
+    background: $button-primary-bg;
+    border-radius: $border-radius;
     border: none;
 
-    font-size: 18px;
-    line-height: 18px;
-    color: #FFFFFF;
+    font-size: $button-font-size;
+    line-height: $button-line-height;
+    color: $button-primary-text;
 
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background $transition-fast;
 
     &:hover {
-        background: #F6121D;
+        background: $color-button-bg-hover;
     }
 }
 
@@ -82,48 +82,48 @@
 .texts {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: $space-md;
 }
 
 .title {
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     font-size: 28px;
     line-height: 34px;
-    color: #ffffff;
+    color: $color-primary-text;
     margin: 0;
 }
 
 .subtitle {
-    font-weight: 400;
-    font-size: 16px;
+    font-weight: $font-weight-regular;
+    font-size: $font-sm;
     line-height: 22px;
-    color: #b3b3b3;
+    color: $color-secondary-text;
     margin: 0;
 }
 
 .filters {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin-top: 32px;
+    gap: $space-lg;
+    margin-top: $space-xl;
 }
 
 .search {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: $space-sm;
     width: 100%;
 }
 
 .filmsTitle {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin: 32px 0 24px;
+    gap: $space-md;
+    margin: $space-xxl 0 24px;
 }
 
 .filmsTitle :global(.text-red) {
-    font-size: 20px;
+    font-size: $font-lg;
 }
 
 .recommendations {
@@ -132,7 +132,7 @@
 
 .cards {
     display: grid;
-    gap: 24px;
+    gap: $space-xl;
     width: 100%;
     justify-content: center;
     padding: 0;
@@ -142,26 +142,28 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
+    gap: $space-sm;
     margin: 40px 0 32px;
 }
 
 .pagesButtons {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: $space-xs;
     justify-content: center;
 }
 
-@media (min-width: 480px) {
+/* ================= MEDIA ================= */
+
+@media (min-width: $screen-s) {
     .cards {
-        gap: 24px;
+        gap: $space-xl;
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: $screen-m) {
     .content {
-        padding: 40px 32px 0;
+        padding: 40px $space-xl 0;
     }
 
     .title {
@@ -170,18 +172,18 @@
     }
 
     .subtitle {
-        font-size: 18px;
+        font-size: $font-md;
         line-height: 26px;
     }
 
     .filters {
         margin-top: 40px;
-        gap: 24px;
+        gap: $space-lg;
     }
 
     .search {
         flex-direction: row;
-        gap: 20px;
+        gap: $space-lg;
     }
 
     .filmsTitle {
@@ -193,12 +195,12 @@
     }
 
     .paginator {
-        gap: 16px;
+        gap: $space-lg;
         margin: 48px 0 40px;
     }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: $screen-l) {
     .content {
         padding: 48px 64px 0;
         max-width: 1180px;
@@ -210,13 +212,13 @@
     }
 
     .subtitle {
-        font-size: 20px;
+        font-size: $font-md;
         line-height: 28px;
     }
 
     .filters {
         align-items: flex-start;
-        gap: 24px;
+        gap: $space-lg;
         margin-top: 48px;
     }
 
@@ -231,7 +233,7 @@
 
     .cards {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 32px;
+        gap: $space-xl;
     }
 
     .filmsTitle {
@@ -239,7 +241,7 @@
     }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: $screen-xl) {
     .content {
         padding: 56px 0 0;
         max-width: 1320px;
@@ -255,21 +257,13 @@
     }
 
     .cards {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 36px;
-    }
-
-    .paginator {
-        margin: 56px 0 48px;
-    }
-}
-
-
-@media (min-width: 1440px) {
-    .cards {
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: 36px;
         max-width: 1400px;
         margin: 0 auto;
+    }
+
+    .paginator {
+        margin: 56px 0 48px;
     }
 }

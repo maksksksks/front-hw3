@@ -1,15 +1,15 @@
-import Text from "../../../components/Text";
-import cover1 from "../../../components/assets/Rectangle 23.png"
+import Text from "@components/Text";
+import cover1 from "@assets/Rectangle 23.png"
 import styles from "./CinemaPageDetails.module.scss";
-import Button from "../../../components/Button";
+import Button from "@components/Button";
 import BigCard from "./components/BigCard";
-import ArrowRightIcon from "../../../components/icons/ArrowRightIcon";
-import Card from "../../../components/Card";
+import ArrowRightIcon from "@components/icons/ArrowRightIcon";
+import Card from "@components/Card";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import axios from "axios";
 import qs from "qs";
-import CinemaLayout from "../Layouts/CinemaLayout";
+import CinemaLayout from "../Layout/CinemaLayout";
 
 const STRAPI_BASE_URL = 'https://front-school-strapi.ktsdev.ru';
 const STRAPI_URL = `${STRAPI_BASE_URL}/api`

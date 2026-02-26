@@ -53,7 +53,7 @@ const BigCard: React.FC<CardProps> = ({
             <div className={styles.bigCardBody}>
                 <div className={styles.textFrame1}>
                     <Text
-                        tag="h1"
+                        tag="h2"
                         view="p-32"
                         weight="bold"
                         color="primary"
@@ -90,7 +90,7 @@ const BigCard: React.FC<CardProps> = ({
                         {"•"}
                     </Text>
                     <Text tag="h2" view="p-20" weight="bold" color="primary" maxLines={1}>
-                        {age}
+                        {age + "+"}
                     </Text>
                     <Text tag="h2" view="p-20" weight="bold" color="primary" maxLines={1}>
                         {"•"}

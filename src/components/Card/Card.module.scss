@@ -1,23 +1,21 @@
-@use '../../styles/variables' as *;
+@use '@styles/variables' as *;
 
 .card {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: $space-xl;
 
-    width: 360px;
+    width: $card-width;
 
-    background: #1e1e1e;
+    background: $color-surface-primary;
     border-radius: $border-radius;
     overflow: hidden;
 }
 
-/* ================= HEADER ================= */
-
 .header {
     position: relative;
     aspect-ratio: 1 / 1;
-    background: #2a2a2a;
+    background: $color-surface-secondary;
 }
 
 .image {
@@ -26,38 +24,34 @@
     object-fit: cover;
 }
 
-/* ================= BADGES ================= */
-
 .badge {
     position: absolute;
-    top: 12px;
-    height: 24px;
+    top: $space-xs;
+    height: $badge-height;
     display: flex;
     align-items: center;
-    gap: $space-xxs;
+    gap: $space-xs;
 
-    padding: 4px 12px;
+    padding: $space-xxs $space-sm;
 
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 12px;
+    background: $color-overlay-dark;
+    border-radius: $badge-radius;
 }
 
 .left {
-    left: 12px;
+    left: $space-xs;
 }
 
 .right {
-    right: 12px;
+    right: $space-xs;
 }
-
-/* ================= BODY ================= */
 
 .body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    padding: 0 16px 16px;
+    padding: 0 $space-md $space-md;
     gap: $space-s;
 }
 
@@ -71,19 +65,15 @@
     text-align: center;
 }
 
-/* ================= ACTIONS ================= */
-
 .actions {
     display: flex;
     justify-content: stretch;
-    gap: $space-xxs;
-    width: 328px;
+    gap: $space-xs;
+    width: 100%;
 }
 
-/* ================= BUTTON OVERRIDE ================= */
-
 .cardButton {
-    padding: 17px 27px;
-    height: 52px;
-    min-height: 52px;
+    padding: $card-button-padding-y $card-button-padding-x;
+    height: $card-button-height;
+    min-height: $card-button-height;
 }

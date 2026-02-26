@@ -1,15 +1,15 @@
-import Text from "../../../components/Text";
-import cover1 from "../../../components/assets/Rectangle 25.png"
+import Text from "@components/Text";
+import cover1 from "@assets/Rectangle 25.png"
 import styles from "./CinemaPage.module.scss";
-import Button from "../../../components/Button";
-import Card from "../../../components/Card";
+import Button from "@components/Button";
+import Card from "@components/Card";
 import Input from "./components/Input";
 import MultiDropdown, { type Option } from "./components/MultiDropdown";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import qs from "qs";
 import { Link } from "react-router";
-import CinemaLayout from "../Layouts/CinemaLayout";
+import CinemaLayout from "../Layout/CinemaLayout";
 
 function onInput(s: string) {
     console.log(s);

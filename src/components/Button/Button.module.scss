@@ -1,20 +1,20 @@
-@use '../../styles/variables' as *;
+@use '@styles/variables' as *;
 
 .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: $space-xxs;
+    gap: $space-xs;
 
-    height: 52px;
-    min-height: 52px;
-    padding: 16px 32px;
+    height: $button-height;
+    min-height: $button-height;
+    padding: $space-md $space-xl;
 
     cursor: pointer;
     border-radius: $border-radius;
     border: none;
 
-    transition: all 0.2s ease;
+    transition: all $transition-fast;
 }
 
 /* ================= VARIANTS ================= */

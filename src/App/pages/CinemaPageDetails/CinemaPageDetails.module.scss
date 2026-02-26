@@ -1,116 +1,107 @@
-@use '../../../styles/variables' as *;
+@use '@styles/variables' as *;
 
 .page {
-  background: #141414;
+    background: $color-page-bg;
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: $space-xl $space-sm;
 }
 
 .content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xl;
 }
 
 .back {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+    cursor: pointer;
 }
 
 .recommendations {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+    width: 100%;
 }
 
 .carouselContainer {
-  position: relative;
-  width: 100%;
+    position: relative;
+    width: 100%;
 }
 
 .cards {
-  display: flex;
-  gap: 29px;
-  overflow: hidden;
-}
-
-.cards > * {
-  flex: 0 0 380px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $space-lg;
+    overflow: visible;
 }
 
 .carouselArrowLeft,
 .carouselArrowRight {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  cursor: pointer;
-  z-index: 5;
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: $carousel-arrow-size;
+    height: $carousel-arrow-size;
+    border-radius: 50%;
+    border: none;
+    background: $color-carousel-arrow-bg;
+    color: $color-carousel-arrow;
+    cursor: pointer;
+    z-index: 5;
 }
 
 .carouselArrowLeft {
-  left: -22px;
+    left: calc(-1 * #{$carousel-arrow-size} / 2);
 }
 
 .carouselArrowRight {
-  right: -22px;
+    right: calc(-1 * #{$carousel-arrow-size} / 2);
 }
-
-@media (min-width: 768px) {
-  .main {
-    padding: 40px 32px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .main {
-    padding: 48px 64px;
-  }
-
-  .content {
-    max-width: 1180px;
-    margin: 0 auto;
-  }
-}
-
-@media (min-width: 1440px) {
-  .content {
-    max-width: 1320px;
-  }
-}
-
-@media (max-width: 768px) {
-  .carouselContainer {
-    display: block;
-  }
-
-  .cards {
+.cards {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+    gap: $space-lg;
     overflow: visible;
-  }
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax($card-width, $card-width));
+}
 
-  .cards > * {
-    width: 100%;
-  }
+@media (min-width: $screen-s) {
+    .cards {
+        grid-template-columns: repeat(auto-fit, minmax($card-width, $card-width));
+    }
+}
 
-  .carouselArrowLeft,
-  .carouselArrowRight {
-    display: none;
-  }
+@media (min-width: $screen-l) and (max-width: $screen-xl) {
+    .cards {
+        justify-content: space-around;
+        grid-template-columns: repeat(auto-fit, minmax($card-width, $card-width));
+    }
+}
+
+@media (min-width: $screen-xl) {
+    .cards {
+        display: flex;
+        justify-content: space-between;
+        gap: $carousel-gap;
+        overflow: hidden;
+    }
+
+    .cards > * {
+        flex: 0 0 $carousel-card-width;
+    }
+
+    .carouselArrowLeft,
+    .carouselArrowRight {
+        display: block;
+    }
 }

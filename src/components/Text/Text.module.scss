@@ -1,4 +1,4 @@
-@use '../../styles/variables' as *;
+@use '@styles/variables' as *;
 
 .text {
     margin: 0;
@@ -7,85 +7,70 @@
     padding: 0;
 }
 
-/* ========================= */
-/* Views */
-/* ========================= */
-
 .view-title {
-    font-size: 44px;
-    line-height: 48px;
-    font-weight: 700;
-    
+    font-size: $font-display;
+    line-height: $line-height-xxl;
+    font-weight: $font-weight-bold;
 }
 
 .view-p-20 {
-    font-size: 20px;
-    line-height: 24px;
+    font-size: $font-lg;
+    line-height: $line-height-lg;
 }
 
 .view-p-20-mono {
-    font-size: 20px;
-    line-height: 20px;
+    font-size: $font-lg;
+    line-height: $line-height-sm;
 }
 
 .view-p-18 {
-    font-size: 18px;
-    line-height: 22px;
+    font-size: $font-md;
+    line-height: $line-height-md;
 }
 
 .view-p-16 {
-    font-size: 16px;
-    line-height: 20px;
+    font-size: $font-sm;
+    line-height: $line-height-sm;
 }
 
 .view-p-14 {
-    font-size: 14px;
-    line-height: 18px;
+    font-size: $font-xs;
+    line-height: $line-height-xs;
 }
 
 .view-p-24 {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: $font-xl;
+    line-height: $line-height-xl;
 }
 
 .view-p-32 {
-    font-size: 32px;
-    line-height: 48px;
+    font-size: $font-xxl;
+    line-height: $line-height-xxl;
 }
 
 .view-button {
     font-family: $font-family-button;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 18px;
+    font-size: $button-font-size;
+    font-weight: $button-font-weight;
+    line-height: $button-line-height;
     letter-spacing: 0;
-    //color: $button-primary-text;
-    //margin: 17px 32px;
 }
 
 .text-back {
-    padding: 12px 13px;
+    padding: $space-sm;
 }
 
-/* ========================= */
-/* Weight */
-/* ========================= */
-
 .weight-normal {
-    font-weight: 400;
+    font-weight: $font-weight-regular;
 }
 
 .weight-medium {
-    font-weight: 500;
+    font-weight: $font-weight-medium;
 }
 
 .weight-bold {
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 }
-
-/* ========================= */
-/* Colors */
-/* ========================= */
 
 .color-primary {
     color: $color-primary-text;
@@ -102,10 +87,6 @@
 .color-red {
     color: $button-primary-bg;
 }
-
-/* ========================= */
-/* Line Clamp */
-/* ========================= */
 
 .clamp {
     display: -webkit-box;

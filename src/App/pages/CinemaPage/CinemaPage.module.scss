@@ -77,6 +77,8 @@
     width: 100%;
     margin: 0 auto;
     padding: 0;
+    // ВАЖНО: Гарантирует, что padding не увеличит ширину блока сверх 100%
+    box-sizing: border-box; 
 }
 
 .texts {
@@ -132,9 +134,13 @@
 
 .cards {
     display: grid;
+    
+    grid-template-columns: repeat(auto-fit, minmax($card-width, 1fr));
+    
+    justify-items: center; 
+    
     gap: $space-xl;
     width: 100%;
-    justify-content: center;
     padding: 0;
 }
 
@@ -153,7 +159,52 @@
     justify-content: center;
 }
 
+.skeletonCard {
+    width: $card-width;
+    height: 600px;
+    background: #e0e0e0;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    animation: pulse 1.5s infinite ease-in-out;
+    box-sizing: border-box;
+}
+
+.skeletonImage {
+    flex: 1;
+    background: #d0d0d0;
+    border-radius: 4px;
+}
+
+.skeletonText {
+    height: 20px;
+    background: #d0d0d0;
+    border-radius: 4px;
+}
+
+.skeletonTextShort {
+    height: 20px;
+    width: 60%;
+    background: #d0d0d0;
+    border-radius: 4px;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
 /* ================= MEDIA ================= */
+
+@media (max-width: $screen-m) {
+    .cards {
+        grid-template-columns: 1fr;
+        justify-items: center; // Центрируем карточку
+    }
+}
 
 @media (min-width: $screen-s) {
     .cards {
@@ -191,6 +242,7 @@
     }
 
     .cards {
+        grid-template-columns: repeat(auto-fit, minmax($card-width, 1fr));
         gap: 28px;
     }
 
@@ -202,7 +254,7 @@
 
 @media (min-width: $screen-l) {
     .content {
-        padding: 48px 64px 0;
+        padding: 48px 40px 0;
         max-width: 1180px;
     }
 
@@ -232,7 +284,6 @@
     }
 
     .cards {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: $space-xl;
     }
 
@@ -243,8 +294,8 @@
 
 @media (min-width: $screen-xl) {
     .content {
-        padding: 56px 0 0;
-        max-width: 1320px;
+        padding: 56px 0 0; 
+        max-width: 1400px;
     }
 
     .search {
@@ -257,10 +308,7 @@
     }
 
     .cards {
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: 36px;
-        max-width: 1400px;
-        margin: 0 auto;
     }
 
     .paginator {

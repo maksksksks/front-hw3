@@ -1,106 +1,77 @@
+// CinemaPageDetails.tsx
 import Text from "@components/Text";
-import cover1 from "@assets/Rectangle 23.png"
+import cover1 from "@assets/Rectangle 23.png" // Дефолтная картинка
 import styles from "./CinemaPageDetails.module.scss";
 import Button from "@components/Button";
 import BigCard from "./components/BigCard";
 import ArrowRightIcon from "@components/icons/ArrowRightIcon";
 import Card from "@components/Card";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router";
-import axios from "axios";
-import qs from "qs";
 import CinemaLayout from "../Layout/CinemaLayout";
-
-const STRAPI_BASE_URL = 'https://front-school-strapi.ktsdev.ru';
-const STRAPI_URL = `${STRAPI_BASE_URL}/api`
+import { useFilmDetails, useRecommendations } from "@hooks/useFilms"; // Наши новые хуки
+import { useFavorites } from "@hooks/useFavorites"; // Хук избранного
+import { STRAPI_URL } from "@services/Films"; // Импорт URL
 
 const CinemaPageDetails = () => {
-    const { documentId } = useParams();
-    const [film, setFilm] = useState<any>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-
-    const [recommendations, setRecommendations] = useState<any[]>([]);
-    const [recLoading, setRecLoading] = useState<boolean>(true);
+    const { documentId } = useParams<{ documentId: string }>();
+    
+    // Состояние для карусели (локальное UI состояние)
     const [currentIndex, setCurrentIndex] = useState(0);
     const ITEMS_PER_PAGE = 3;
 
-    const fetchFilmDetails = async () => {
-        try {
-            const response = await axios.get(
-                `${STRAPI_URL}/films/${documentId}`,
-            );
-            setFilm(response.data.data);
-        } catch (err) {
-            setError("Ошибка при загрузке фильма.");
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    };
+    // 1. Запрос деталей фильма
+    const { 
+        data: film, 
+        isLoading: isFilmLoading, 
+        isError: isFilmError 
+    } = useFilmDetails(documentId);
 
-    const fetchRecommendations = async (releaseYear: number | undefined) => {
-        if (!releaseYear) {
-            setRecommendations([]);
-            setRecLoading(false);
-            return;
-        }
+    // 2. Запрос рекомендаций (зависит от года выхода фильма)
+    const { 
+        data: recData, 
+        isLoading: isRecLoading 
+    } = useRecommendations(film?.releaseYear, film?.documentId);
 
-        try {
-            setRecLoading(true);
+    const { toggleFavorite, isFavorite } = useFavorites();
 
-            const minYear = releaseYear - 2;
-            const maxYear = releaseYear + 2;
+    // --- Рендеринг состояний ---
+    
+    if (isFilmLoading) {
+        return (
+            <CinemaLayout>
+                <div className={styles.content}>
+                    <div className={styles.skeletonBigCard} />
+                </div>
+            </CinemaLayout>
+        );
+    }
 
-            const query = qs.stringify(
-                {
-                    populate: ["poster"],
-                    filters: {
-                        releaseYear: {
-                            $gte: minYear,
-                            $lte: maxYear
-                        },
-                        documentId: {
-                            $ne: documentId
-                        }
-                    },
-                    pagination: {
-                        page: 1,
-                        pageSize: 6
-                    },
-                },
-                { encodeValuesOnly: true }
-            );
+    if (isFilmError || !film) {
+        return (
+            <CinemaLayout>
+                <div className={styles.content}>
+                    <Text tag="p" color="red">Ошибка загрузки или фильм не найден.</Text>
+                    <Link to="/films"><Button>Назад к списку</Button></Link>
+                </div>
+            </CinemaLayout>
+        );
+    }
 
-            const { data } = await axios.get(`${STRAPI_URL}/films?${query}`);
+    // --- Данные ---
+    
+    const imageUrl = film.poster?.url 
+        ? `${STRAPI_URL}${film.poster.url}` 
+        : cover1;
+    
+    const recommendations = recData?.data || [];
 
-            setRecommendations(data.data || []);
-        } catch (err) {
-            console.error("Ошибка загрузки рекомендаций", err);
-            setRecommendations([]);
-        } finally {
-            setRecLoading(false);
-        }
-    };
+    // --- Обработчики карусели ---
 
-    useEffect(() => {
-        fetchFilmDetails();
-    }, [documentId]);
-
-    useEffect(() => {
-        if (film?.releaseYear) {
-            fetchRecommendations(film.releaseYear);
-        } else {
-            setRecLoading(false);
-        }
-    }, [film?.releaseYear, documentId]);
-
-    if (loading) return <div>Загрузка...</div>;
-    if (error) return <div>{error}</div>;
-    if (!film) return <div>Фильм не найден</div>;
-
-    const { title, description, releaseYear, duration, rating, ageLimit, poster, genre } = film;
-    const imageUrl = poster?.url ? `${STRAPI_BASE_URL}${poster.url}` : cover1;
+    const handlePrev = () => setCurrentIndex(prev => Math.max(0, prev - ITEMS_PER_PAGE));
+    const handleNext = () => setCurrentIndex(prev => prev + ITEMS_PER_PAGE);
+    const isPrevDisabled = currentIndex === 0;
+    const isNextDisabled = currentIndex + ITEMS_PER_PAGE >= recommendations.length;
 
     return (
         <CinemaLayout>
@@ -108,12 +79,7 @@ const CinemaPageDetails = () => {
                 <Link to={`/films`}>
                     <div className={styles.back}>
                         <ArrowRightIcon width={32} height={32} />
-                        <Text
-                            color="primary"
-                            view="p-20"
-                            tag="div"
-                            className="text-back"
-                        >
+                        <Text color="primary" view="p-20" tag="div">
                             Назад
                         </Text>
                     </div>
@@ -121,23 +87,22 @@ const CinemaPageDetails = () => {
 
                 <BigCard
                     image={imageUrl}
-                    title={title}
-                    description={description}
-                    year={releaseYear}
-                    genre={genre}
-                    age={ageLimit}
-                    duration={`${duration} мин`}
-                    rating={rating}
+                    title={film.title}
+                    description={film.description}
+                    year={film.releaseYear}
+                    genre={film.category?.name || "Неизвестно"} // Предполагаем связь с category
+                    age={film.ageLimit.toString()}
+                    duration={`${film.duration} мин`}
+                    rating={film.rating.toString()}
                 />
-
 
                 <div className={styles.recommendations}>
                     <Text color="primary" view="p-32" weight="bold" tag="h1">
                         Рекомендации
                     </Text>
 
-                    {recLoading ? (
-                        <div>Загрузка рекомендаций...</div>
+                    {isRecLoading ? (
+                        <div className={styles.skeletonRecs}>Загрузка рекомендаций...</div>
                     ) : recommendations.length === 0 ? (
                         <Text color="secondary" view="p-20">
                             Рекомендаций в диапазоне ±2 года пока нет
@@ -146,8 +111,8 @@ const CinemaPageDetails = () => {
                         <div className={styles.carouselContainer}>
                             <button
                                 className={styles.carouselArrowLeft}
-                                onClick={() => setCurrentIndex(prev => Math.max(0, prev - ITEMS_PER_PAGE))}
-                                disabled={currentIndex === 0}
+                                onClick={handlePrev}
+                                disabled={isPrevDisabled}
                                 aria-label="Предыдущие рекомендации"
                             >
                                 ←
@@ -158,7 +123,7 @@ const CinemaPageDetails = () => {
                                     .slice(currentIndex, currentIndex + ITEMS_PER_PAGE)
                                     .map((rec) => {
                                         const recImage = rec.poster?.url
-                                            ? `${STRAPI_BASE_URL}${rec.poster.url}`
+                                            ? `${STRAPI_URL}${rec.poster.url}`
                                             : cover1;
 
                                         return (
@@ -167,17 +132,21 @@ const CinemaPageDetails = () => {
                                                 image={recImage}
                                                 rating={<>{rec.rating || "—"}</>}
                                                 label={`${rec.duration || "?"} мин`}
-                                                meta={`${rec.releaseYear || "?"} • ${rec.genre || "—"} • ${rec.ageLimit || "?"}+`}
+                                                meta={`${rec.releaseYear || "?"} • ${rec.category?.name || "—"} • ${rec.ageLimit || "?"}+`}
                                                 title={rec.title || "Без названия"}
-                                                subtitle={rec.shortDescription || rec.description?.slice(0, 120) || ""}
+                                                subtitle={rec.shortDescription || ""}
                                                 secondaryAction={
-                                                    <Button variant="outlined" textColor="red" className={styles.cardButton}>
-                                                        В избранное
+                                                    <Button 
+                                                        variant="outlined" 
+                                                        textColor={isFavorite(rec.documentId) ? "red" : "primary"} 
+                                                        onClick={() => toggleFavorite(rec.documentId)}
+                                                    >
+                                                        {isFavorite(rec.documentId) ? "В избранном" : "В избранное"}
                                                     </Button>
                                                 }
                                                 primaryAction={
                                                     <Link to={`/films/${rec.documentId}`}>
-                                                        <Button variant="filled" className={styles.cardButton}>
+                                                        <Button variant="filled">
                                                             Смотреть
                                                         </Button>
                                                     </Link>
@@ -189,8 +158,8 @@ const CinemaPageDetails = () => {
 
                             <button
                                 className={styles.carouselArrowRight}
-                                onClick={() => setCurrentIndex(prev => prev + ITEMS_PER_PAGE)}
-                                disabled={currentIndex + ITEMS_PER_PAGE >= recommendations.length}
+                                onClick={handleNext}
+                                disabled={isNextDisabled}
                                 aria-label="Следующие рекомендации"
                             >
                                 →

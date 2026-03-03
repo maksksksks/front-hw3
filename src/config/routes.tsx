@@ -2,6 +2,7 @@ import { Navigate, type RouteObject } from "react-router";
 import App from "../App";
 import CinemaPage from "../App/pages/CinemaPage";
 import CinemaPageDetails from "../App/pages/CinemaPageDetails";
+import FavoritesPage from "@/App/pages/FavoritesPage/FavoritesPage";
 
 export const routesConfig: RouteObject[] = [
   {
@@ -19,7 +20,11 @@ export const routesConfig: RouteObject[] = [
       {
         path: '/films/:documentId',
         element: <CinemaPageDetails />
-      }
+      },
+      {
+        path: "/favorites",
+        element: <FavoritesPage />
+      },
     ]
   }
 ];

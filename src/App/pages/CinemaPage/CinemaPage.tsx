@@ -1,24 +1,20 @@
+// CinemaPage.tsx
 import Text from "@components/Text";
-import cover1 from "@assets/Rectangle 25.png"
 import styles from "./CinemaPage.module.scss";
 import Button from "@components/Button";
 import Card from "@components/Card";
 import Input from "./components/Input";
 import MultiDropdown, { type Option } from "./components/MultiDropdown";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import qs from "qs";
-import { Link } from "react-router";
+import { useMemo, useState } from "react";
+import { Link, useSearchParams } from "react-router"; // Используем useSearchParams
 import CinemaLayout from "../Layout/CinemaLayout";
+import { useFilms } from "@hooks/useFilms"; // Наш хук
+import { useFavorites } from "@hooks/useFavorites"; // Хук избранного
+import { STRAPI_URL } from "@/services/Films";
 
-function onInput(s: string) {
-    console.log(s);
-}
 
-const STRAPI_BASE_URL = 'https://front-school-strapi.ktsdev.ru';
-const STRAPI_URL = `${STRAPI_BASE_URL}/api`
-
-const options: Option[] = [
+// Опции жанров (лучше вынести в константы или загружать с бэка)
+const genreOptions: Option[] = [
     { key: 'fantasy', value: 'Фэнтези' },
     { key: 'drama', value: 'Драма' },
     { key: 'comedy', value: 'Комедия' },
@@ -26,58 +22,71 @@ const options: Option[] = [
 ];
 
 const CinemaPage = () => {
-    const [films, setFilms] = useState<any[]>([]);
-    const [total, setTotal] = useState<number>(0);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [selectedGenres, setSelectedGenres] = useState<Option[]>([]);
+    // Работа с Query-параметрами (URL)
+    const [searchParams, setSearchParams] = useSearchParams();
+    
+    // Читаем состояние из URL
+    const currentPage = Number(searchParams.get('page')) || 1;
+    const searchQuery = searchParams.get('search') || '';
+    const selectedGenreKeys = searchParams.get('genres')?.split(',').filter(Boolean) || [];
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize] = useState(9);
-    const [pageCount, setPageCount] = useState(1);
+    // Локальное состояние для инпута поиска (для мгновенного отклика ввода)
+    const [inputValue, setInputValue] = useState(searchQuery);
 
-    const fetchFilms = async (page: number = 1) => {
-        try {
-            setLoading(true);
+    // Преобразуем ключи жанров в объекты Option для MultiDropdown
+    const selectedGenres = useMemo(() => {
+        return genreOptions.filter(opt => selectedGenreKeys.includes(opt.key));
+    }, [selectedGenreKeys]);
 
-            const query = qs.stringify(
-                {
-                    populate: ["category", "poster", "gallery"],
-                    pagination: {
-                        page,
-                        pageSize,
-                    },
-                },
-                { encodeValuesOnly: true }
-            );
+    // Хуки
+    const { data, isLoading, isError } = useFilms({
+        page: currentPage,
+        search: searchQuery, // В запрос уходит то, что в URL
+        genres: selectedGenreKeys,
+    });
 
-            const { data } = await axios.get(
-                `${STRAPI_URL}/films?${query}`
-            );
+    const { toggleFavorite, isFavorite } = useFavorites();
 
-            setFilms(data.data);
-            setTotal(data.meta.pagination.total);
-            setPageCount(data.meta.pagination.pageCount || 1);
-            setCurrentPage(data.meta.pagination.page);
-
-        } catch (error) {
-            console.error("Ошибка загрузки фильмов", error);
-        } finally {
-            setLoading(false);
-        }
+    // Обработчики
+    const handleSearch = () => {
+        // При нажатии "Найти" обновляем URL
+        const params = new URLSearchParams(searchParams);
+        params.set('search', inputValue);
+        params.set('page', '1'); // Сброс пагинации при новом поиске
+        setSearchParams(params);
     };
 
-    useEffect(() => {
-        fetchFilms(currentPage);
-    }, [currentPage]);
+    const handleGenreChange = (value: Option[]) => {
+        const params = new URLSearchParams(searchParams);
+        const keys = value.map(v => v.key);
+        
+        if (keys.length > 0) {
+            params.set('genres', keys.join(','));
+        } else {
+            params.delete('genres');
+        }
+        params.set('page', '1'); // Сброс пагинации
+        setSearchParams(params);
+    };
+
+    const handlePageChange = (page: number) => {
+        const params = new URLSearchParams(searchParams);
+        params.set('page', String(page));
+        setSearchParams(params);
+        // Можно добавить скролл вверх
+        window.scrollTo(0, 0);
+    };
+
+    // Данные для рендера
+    const films = data?.data || [];
+    const total = data?.meta.pagination.total || 0;
+    const pageCount = data?.meta.pagination.pageCount || 1;
 
     return (
         <CinemaLayout>
             <div className={styles.content}>
                 <div className={styles.texts}>
-                    <Text tag="p" className={styles.title}>
-                        Cinema
-                    </Text>
-
+                    <Text tag="p" className={styles.title}>Cinema</Text>
                     <Text tag="p" className={styles.subtitle}>
                         Подборка для вечера уже здесь: фильмы, сериалы и новинки.
                         <br />
@@ -88,41 +97,37 @@ const CinemaPage = () => {
                 <div className={styles.filters}>
                     <div className={styles.search}>
                         <Input
-                            onChange={onInput}
-                            value=""
+                            onChange={setInputValue}
+                            value={inputValue}
                             placeholder="Искать фильм"
                             className={styles.searchInput}
+                            // Можно добавить onKeyDown для поиска по Enter
                         />
-                        <Button className={styles.searchButton}>
+                        <Button 
+                            className={styles.searchButton}
+                            onClick={handleSearch}
+                        >
                             Найти
                         </Button>
                     </div>
 
                     <MultiDropdown
                         className={styles.MultiDropdownFilters}
-                        options={options}
+                        options={genreOptions}
                         value={selectedGenres}
-                        onChange={setSelectedGenres}
+                        onChange={handleGenreChange}
                         getTitle={(value) =>
                             value.length === 0
                                 ? 'Фильтры'
                                 : value.map(v => v.value).join(', ')
                         }
                     />
+                    
                     <div className={styles.filmsTitle}>
-                        <Text
-                            color="primary"
-                            view="p-32"
-                            weight="bold"
-                            tag="h1"
-                        >
+                        <Text color="primary" view="p-32" weight="bold" tag="h1">
                             Все фильмы
                         </Text>
-                        <Text
-                            color="red"
-                            view="p-20-mono"
-                            weight="bold"
-                        >
+                        <Text color="red" view="p-20-mono" weight="bold">
                             {total}
                         </Text>
                     </div>
@@ -130,12 +135,28 @@ const CinemaPage = () => {
 
                 <div className={styles.recommendations}>
                     <div className={styles.cards}>
-                        {loading && <div>Загрузка...</div>}
+                        {isLoading && (
+                            <>
+                                {[...Array(9)].map((_, i) => (
+                                    <div key={i} className={styles.skeletonCard}>
+                                        <div className={styles.skeletonImage}></div>
+                                        <div className={styles.skeletonText}></div>
+                                        <div className={styles.skeletonTextShort}></div>
+                                    </div>
+                                ))}
+                            </>
+                        )}
 
+                        {isError && <div>Ошибка загрузки данных. Попробуйте позже.</div>}
+
+                        {!isLoading && films.length === 0 && (
+                            <div>Фильмы не найдены.</div>
+                        )}
 
                         {films.map((film) => {
-                            const imageUrl = cover1;
-                            console.log(JSON.stringify(films[0], null, 2));
+                            const imageUrl = film.poster?.url 
+                                ? `${STRAPI_URL}${film.poster.url}` 
+                                : "@assets/Rectangle 50.png"; 
 
                             return (
                                 <Card
@@ -147,15 +168,17 @@ const CinemaPage = () => {
                                     title={film.title}
                                     subtitle={film.shortDescription}
                                     secondaryAction={
-                                        <Button variant="outlined" textColor="red" className="cardButton">
-                                            В избранное
+                                        <Button 
+                                            variant="outlined" 
+                                            textColor={isFavorite(film.documentId) ? "red" : "primary"} 
+                                            onClick={() => toggleFavorite(film.documentId)}
+                                        >
+                                            {isFavorite(film.documentId) ? "В избранном" : "В избранное"}
                                         </Button>
                                     }
                                     primaryAction={
                                         <Link to={`/films/${film.documentId}`}>
-                                            <Button variant="filled">
-                                                Смотреть
-                                            </Button>
+                                            <Button variant="filled">Смотреть</Button>
                                         </Link>
                                     }
                                 />
@@ -166,12 +189,12 @@ const CinemaPage = () => {
             </div>
 
             <div className={styles.footer}>
-                {!loading && films.length > 0 && pageCount > 1 && (
+                {!isLoading && films.length > 0 && pageCount > 1 && (
                     <div className={styles.paginator}>
                         <Button
                             variant="outlined"
                             disabled={currentPage === 1}
-                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                            onClick={() => handlePageChange(currentPage - 1)}
                         >
                             Предыдущая
                         </Button>
@@ -181,7 +204,7 @@ const CinemaPage = () => {
                                 <Button
                                     key={page}
                                     variant={page === currentPage ? "filled" : "outlined"}
-                                    onClick={() => setCurrentPage(page)}
+                                    onClick={() => handlePageChange(page)}
                                     style={{ minWidth: "48px" }}
                                 >
                                     {page}
@@ -192,7 +215,7 @@ const CinemaPage = () => {
                         <Button
                             variant="outlined"
                             disabled={currentPage === pageCount}
-                            onClick={() => setCurrentPage(p => p + 1)}
+                            onClick={() => handlePageChange(currentPage + 1)}
                         >
                             Следующая
                         </Button>
@@ -202,4 +225,5 @@ const CinemaPage = () => {
         </CinemaLayout>
     )
 }
+
 export default CinemaPage;

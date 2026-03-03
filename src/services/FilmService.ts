@@ -1,4 +1,3 @@
-// src/api/films.ts
 import axios from "axios";
 import qs from "qs";
 import { STRAPI_URL, type FilmsQueryParams } from "./Films";
@@ -30,7 +29,6 @@ export interface FilmsResponse {
         };
     };
 }
-// Функция-фетчер для TanStack Query
 export const fetchFilms = async (params: FilmsQueryParams): Promise<FilmsResponse> => {
     const { page = 1, pageSize = 9, search, genres } = params;
 

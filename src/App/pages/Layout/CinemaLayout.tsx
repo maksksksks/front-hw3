@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
-import BookmarkIcon from "../../../components/icons/BookmarkIcon";
-import UserIcon from "../../../components/icons/UserIcon";
-import logo from "../../../components/assets/logo.png";
-import Button from "../../../components/Button";
+import BookmarkIcon from "@components/icons/BookmarkIcon";
+import UserIcon from "@components/icons/UserIcon";
+import logo from "@components/assets/logo.png";
+import Button from "@components/Button";
 import styles from "./CinemaLayout.module.scss";
 import { Link } from 'react-router';
 

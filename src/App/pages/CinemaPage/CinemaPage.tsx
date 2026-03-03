@@ -52,7 +52,7 @@ const CinemaPage = () => {
         // При нажатии "Найти" обновляем URL
         const params = new URLSearchParams(searchParams);
         params.set('search', inputValue);
-        params.set('page', '1'); // Сброс пагинации при новом поиске
+        params.set('page', '1');
         setSearchParams(params);
     };
 
@@ -65,7 +65,7 @@ const CinemaPage = () => {
         } else {
             params.delete('genres');
         }
-        params.set('page', '1'); // Сброс пагинации
+        params.set('page', '1');
         setSearchParams(params);
     };
 
@@ -73,11 +73,9 @@ const CinemaPage = () => {
         const params = new URLSearchParams(searchParams);
         params.set('page', String(page));
         setSearchParams(params);
-        // Можно добавить скролл вверх
         window.scrollTo(0, 0);
     };
 
-    // Данные для рендера
     const films = data?.data || [];
     const total = data?.meta.pagination.total || 0;
     const pageCount = data?.meta.pagination.pageCount || 1;
@@ -101,7 +99,6 @@ const CinemaPage = () => {
                             value={inputValue}
                             placeholder="Искать фильм"
                             className={styles.searchInput}
-                            // Можно добавить onKeyDown для поиска по Enter
                         />
                         <Button 
                             className={styles.searchButton}

@@ -20,17 +20,17 @@
 .option {
   display: flex;
   align-items: center;
-  padding: $space-s $space-sm; // 14px 12px
-  height: $button-height; // 48px
+  padding: $space-s $space-sm;
+  height: $button-height;
   cursor: pointer;
 
-  font-size: $font-sm; // 16px
-  line-height: $line-height-sm; // 20px
+  font-size: $font-sm;
+  line-height: $line-height-sm;
   font-weight: $font-weight-regular;
-  color: $color-dropdown-text; // белый текст
+  color: $color-dropdown-text;
 
   &.selected {
-    color: $loader-bg; // #518581 для выделенной опции
+    color: $loader-bg;
     font-weight: $font-weight-medium;
   }
 }
@@ -41,7 +41,7 @@
 }
 
 .noResults {
-  padding: $space-s $space-sm; // 14px 12px
+  padding: $space-s $space-sm;
   height: $button-height;
-  color: $color-dropdown-text-disabled; // серый текст для "нет результатов"
+  color: $color-dropdown-text-disabled;
 }

@@ -1,17 +1,15 @@
-// src/App/pages/FavoritesPage/FavoritesPage.tsx
 import Text from "@components/Text";
-import styles from "./FavoritesPage.module.scss"; // Создадим этот файл следующим
+import styles from "./FavoritesPage.module.scss";
 import Button from "@components/Button";
 import Card from "@components/Card";
 import { Link } from "react-router";
 import CinemaLayout from "../Layout/CinemaLayout";
 import { useFavorites } from "@hooks/useFavorites";
-import { useFilms } from "@hooks/useFilms"; // Наш хук для получения фильмов
+import { useFilms } from "@hooks/useFilms";
 import { STRAPI_URL } from "@services/Films";
-import cover1 from "@assets/Rectangle 25.png"; // Заглушка
+import cover1 from "@assets/Rectangle 25.png"; 
 
 const FavoritesPage = () => {
-    // 1. Получаем список ID избранного
     const { favorites, toggleFavorite, isFavorite } = useFavorites();
 
     const { data, isLoading, isError } = useFilms({ 
@@ -21,12 +19,10 @@ const FavoritesPage = () => {
         enabled: favorites.length > 0 
     });
 
-    // Если избранного нет, data будет undefined, films будет пустым массивом
     const films = data?.data || [];
 
     const displayedFilms = films.filter(film => favorites.includes(film.documentId));
 
-    // Состояния рендера
     const renderContent = () => {
         if (favorites.length === 0) {
             return (

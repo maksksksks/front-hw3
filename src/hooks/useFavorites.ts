@@ -1,15 +1,12 @@
-// src/hooks/useFavorites.ts
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const FAVORITES_KEY = 'cinema_favorites';
 
-// Вспомогательная функция для получения данных (для useQuery)
 const getFavorites = async (): Promise<string[]> => {
     const saved = localStorage.getItem(FAVORITES_KEY);
     return saved ? JSON.parse(saved) : [];
 };
 
-// Вспомогательная функция для сохранения (для mutation)
 const saveFavorites = async (ids: string[]): Promise<string[]> => {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(ids));
     return ids;
@@ -42,7 +39,6 @@ export const useFavorites = () => {
             ? currentFavorites.filter((fid) => fid !== id)
             : [...currentFavorites, id];
             
-        // Запускаем мутацию
         mutation.mutate(newList);
     };
 

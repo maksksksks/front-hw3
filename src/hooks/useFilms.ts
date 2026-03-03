@@ -1,4 +1,3 @@
-// src/hooks/useFilms.ts
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 import { fetchFilms} from '@services/FilmService';
 import type { FilmsQueryParams, FilmsResponse } from '@services/FilmService';
@@ -34,6 +33,6 @@ export const useRecommendations = (releaseYear?: number, currentFilmId?: string)
             yearRange: releaseYear ? { min: releaseYear - 2, max: releaseYear + 2 } : undefined,
             pageSize: 6,
         }),
-        enabled: !!releaseYear, // Запрос выполняется только если известен год
+        enabled: !!releaseYear,
     });
 };

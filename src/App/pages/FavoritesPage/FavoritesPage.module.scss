@@ -1,4 +1,3 @@
-// FavoritesPage.module.scss
 @use '../../../styles/variables' as *;
 
 .content {
@@ -7,7 +6,6 @@
     width: 100%;
     margin: 0 auto;
     padding: 0;
-    // ВАЖНО: Гарантирует, что padding не увеличит ширину блока сверх 100%
     box-sizing: border-box; 
 }
 
@@ -25,10 +23,8 @@
 .cards {
     display: grid;
     
-    // Логика как на главной: адаптивная сетка с жесткой привязкой к ширине карточки
     grid-template-columns: repeat(auto-fit, minmax($card-width, 1fr));
     
-    // Центрируем карточки, если их меньше, чем колонок
     justify-items: center; 
     
     gap: $space-xl;
@@ -51,9 +47,8 @@
     text-align: center;
 }
 
-// Скелетоны используем переменную ширины карточки
 .skeletonCard {
-    width: $card-width; // Было 340px
+    width: $card-width;
     height: 600px;
     background: #e0e0e0;
     border-radius: 8px;
@@ -90,9 +85,6 @@
     100% { opacity: 1; }
 }
 
-/* ================= MEDIA ================= */
-
-// Мобильная логика: 1 колонка по центру
 @media (max-width: $screen-m) {
     .cards {
         grid-template-columns: 1fr;
@@ -116,7 +108,6 @@
     }
 
     .cards {
-        // Дублируем логику главной
         grid-template-columns: repeat(auto-fit, minmax($card-width, 1fr));
         gap: 28px;
     }
@@ -124,7 +115,6 @@
 
 @media (min-width: $screen-l) {
     .content {
-        // Те же отступы, что и на главной (48px 40px), чтобы 3 карточки влезали идеально
         padding: 48px 40px 0;
         max-width: 1180px;
     }
@@ -140,7 +130,6 @@
 
 @media (min-width: $screen-xl) {
     .content {
-        // Убираем боковые паддинги, центрируем по max-width
         padding: 56px 0 0;
         max-width: 1400px;
     }

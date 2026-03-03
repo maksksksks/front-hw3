@@ -1,4 +1,3 @@
-// src/services/films.ts
 import axios from "axios";
 import qs from "qs";
 import type { Film, FilmsResponse } from "./FilmService";
@@ -7,13 +6,11 @@ const STRAPI_BASE_URL = 'https://front-school-strapi.ktsdev.ru';
 export const STRAPI_URL = `${STRAPI_BASE_URL}/api`;
 
 
-// Добавляем тип для ответа одного фильма
 export interface SingleFilmResponse {
     data: Film;
     meta: {};
 }
 
-// Обновляем интерфейс параметров для поддержки фильтров рекомендаций
 export interface FilmsQueryParams {
     page?: number;
     pageSize?: number;
@@ -24,7 +21,6 @@ export interface FilmsQueryParams {
     ids?: string[];
 }
 
-// Функция получения одного фильма
 export const fetchFilmById = async (documentId: string): Promise<Film> => {
     const query = qs.stringify({
         populate: ["poster", "category", "gallery"],

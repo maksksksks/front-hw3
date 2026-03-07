@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: $screen-xl;
 }
 
 .header {
@@ -37,8 +38,6 @@
     padding: $space-xl $space-sm;
     margin-top: auto;
 }
-
-/* =================== MEDIA QUERIES =================== */
 
 @media (min-width: $screen-m) {
     .header {

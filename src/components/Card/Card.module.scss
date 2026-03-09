@@ -4,8 +4,9 @@
     display: flex;
     flex-direction: column;
     gap: $space-xl;
-
-    width: $card-width;
+    
+    // 1. Заставляем карточку растягиваться на всю высоту ячейки сетки
+    height: 100%; 
 
     background: $color-surface-primary;
     border-radius: $border-radius;
@@ -16,6 +17,7 @@
     position: relative;
     aspect-ratio: 1 / 1;
     background: $color-surface-secondary;
+    flex-shrink: 0; // Хедер не должен сжиматься
 }
 
 .image {
@@ -50,6 +52,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
+    // 2. Заставляем body растягиваться и заполнять оставшееся пространство карточки
+    flex-grow: 1; 
 
     padding: 0 $space-md $space-md;
     gap: $space-s;
@@ -65,15 +70,32 @@
     text-align: center;
 }
 
+// 3. Логика заголовка: фиксируем высоту под 2 строки текста.
+// Если текста 1 строка - останется пустое место (как "пропущенная строка").
+// Если 2 строки - он займет всё место.
+.titleWrapper {
+    // Подбираем значение под ваш шрифт.
+    // Для view="p-20" (20px) и стандартного межстрочного интервала (~24-26px)
+    // 2 строки будут примерно 48-52px.
+    min-height: 52px; 
+    
+    // На случай, если заголовок все-таки будет длиннее 2 строк (хотя maxLines нет), 
+    // лучше ограничить высоту, чтобы не сломать верстку, 
+    // либо оставить auto, если это допустимо.
+}
+
 .actions {
     display: flex;
     justify-content: stretch;
     gap: $space-xs;
     width: 100%;
+    margin-top: auto;
 }
 
 .cardButton {
     padding: $card-button-padding-y $card-button-padding-x;
     height: $card-button-height;
     min-height: $card-button-height;
+    flex-grow: 1;
+    width: 100%;
 }

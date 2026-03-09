@@ -2,6 +2,7 @@ import { routesConfig } from "./config/routes";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "@styles/global.scss";
 
 const queryClient = new QueryClient({
     defaultOptions: {

@@ -12,6 +12,7 @@
   background: $color-surface-primary; // #181818
   border: 1px solid #333333; // можно добавить токен $color-border-dark если нужно
   transition: border-color $transition-fast;
+  //min-width: 900px;
 
   &:focus-within {
     border-color: $loader-bg; // #518581

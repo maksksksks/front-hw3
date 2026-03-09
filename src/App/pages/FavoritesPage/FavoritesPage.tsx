@@ -6,7 +6,7 @@ import { Link } from "react-router";
 import CinemaLayout from "../Layout/CinemaLayout";
 import { useFavorites } from "@hooks/useFavorites";
 import { useFilms } from "@hooks/useFilms";
-import { STRAPI_URL } from "@services/Films";
+import { STRAPI_URL } from "@services/FilmService";
 import cover1 from "@assets/Rectangle 25.png"; 
 
 const FavoritesPage = () => {

@@ -10,7 +10,7 @@ import { Link, useSearchParams } from "react-router"; // Используем us
 import CinemaLayout from "../Layout/CinemaLayout";
 import { useFilms } from "@hooks/useFilms"; // Наш хук
 import { useFavorites } from "@hooks/useFavorites"; // Хук избранного
-import { STRAPI_URL } from "@/services/Films";
+import { STRAPI_URL } from "@services/FilmService";
 
 
 // Опции жанров (лучше вынести в константы или загружать с бэка)
@@ -47,9 +47,7 @@ const CinemaPage = () => {
 
     const { toggleFavorite, isFavorite } = useFavorites();
 
-    // Обработчики
     const handleSearch = () => {
-        // При нажатии "Найти" обновляем URL
         const params = new URLSearchParams(searchParams);
         params.set('search', inputValue);
         params.set('page', '1');

@@ -11,7 +11,7 @@ import { Link, useParams } from "react-router";
 import CinemaLayout from "../Layout/CinemaLayout";
 import { useFilmDetails, useRecommendations } from "@hooks/useFilms"; // Наши новые хуки
 import { useFavorites } from "@hooks/useFavorites"; // Хук избранного
-import { STRAPI_URL } from "@services/Films"; // Импорт URL
+import { STRAPI_URL } from "@services/FilmService"; // Импорт URL
 
 const CinemaPageDetails = () => {
     const { documentId } = useParams<{ documentId: string }>();
@@ -35,13 +35,37 @@ const CinemaPageDetails = () => {
 
     const { toggleFavorite, isFavorite } = useFavorites();
 
-    // --- Рендеринг состояний ---
     
     if (isFilmLoading) {
         return (
             <CinemaLayout>
                 <div className={styles.content}>
-                    <div className={styles.skeletonBigCard} />
+                    {/* Скелетон кнопки "Назад" */}
+                    <div className={styles.skeletonBack} />
+
+                    {/* Скелетон BigCard */}
+                    <div className={styles.skeletonBigCard}>
+                        <div className={styles.skeletonBigImage} />
+                        
+                        <div className={styles.skeletonBigCardBody}>
+                            {/* textFrame1: Заголовок и Рейтинг */}
+                            <div className={styles.skeletonTextFrame1}>
+                                <div className={styles.skeletonTitle} />
+                                <div className={styles.skeletonRating} />
+                            </div>
+
+                            {/* textFrame2: Год, жанр и т.д. */}
+                            <div className={styles.skeletonTextFrame2} />
+
+                            {/* textFrame3: Описание */}
+                            <div className={styles.skeletonTextFrame3}>
+                                <div className={styles.skeletonTextLine} />
+                                <div className={styles.skeletonTextLine} />
+                                <div className={styles.skeletonTextLine} />
+                                <div className={styles.skeletonTextLineShort} />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </CinemaLayout>
         );
@@ -90,7 +114,7 @@ const CinemaPageDetails = () => {
                     title={film.title}
                     description={film.description}
                     year={film.releaseYear}
-                    genre={film.category?.name || "Неизвестно"} // Предполагаем связь с category
+                    genre={film.category?.name || "Неизвестно"}
                     age={film.ageLimit.toString()}
                     duration={`${film.duration} мин`}
                     rating={film.rating.toString()}

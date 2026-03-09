@@ -1,7 +1,7 @@
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
-import { fetchFilms} from '@services/FilmService';
+// Импортируем ВСЁ из одного файла
+import { fetchFilms, fetchFilmById } from '@services/FilmService';
 import type { FilmsQueryParams, FilmsResponse } from '@services/FilmService';
-import { fetchFilmById } from '@services/Films';
 
 type UseFilmsOptions = Omit<UseQueryOptions<FilmsResponse, Error, FilmsResponse>, 'queryKey' | 'queryFn'>;
 
@@ -10,7 +10,7 @@ export const useFilms = (params: FilmsQueryParams, options?: UseFilmsOptions) =>
   return useQuery({
     queryKey: ['films', params],
     queryFn: () => fetchFilms(params),
-    placeholderData: (previousData) => previousData,
+    placeholderData: (previousData) => previousData, // Сохраняет данные при смене фильтров
     ...options,
   });
 };
@@ -30,9 +30,10 @@ export const useRecommendations = (releaseYear?: number, currentFilmId?: string)
         queryKey: ['recommendations', releaseYear, currentFilmId],
         queryFn: () => fetchFilms({
             excludeId: currentFilmId,
+            // Пример логики: +/- 2 года от выхода фильма
             yearRange: releaseYear ? { min: releaseYear - 2, max: releaseYear + 2 } : undefined,
-            pageSize: 6,
+            pageSize: 6, // Ограничиваем кол-во рекомендаций
         }),
-        enabled: !!releaseYear,
+        enabled: !!releaseYear, // Запрос идет только если известен год
     });
 };

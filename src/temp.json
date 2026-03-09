@@ -1,0 +1,72 @@
+{
+    "data": [
+        {
+            "id": 65,
+            "documentId": "a8nogfuttc9l03a5ovr60at1",
+            "title": "Боевик",
+            "slug": "action",
+            "description": "Фильмы с динамичным сюжетом и экшн-сценами",
+            "createdAt": "2026-02-09T22:29:49.273Z",
+            "updatedAt": "2026-02-09T23:26:39.223Z",
+            "publishedAt": "2026-02-09T23:26:39.256Z"
+        },
+        {
+            "id": 67,
+            "documentId": "ku6bnys4ap0kqoe8evgihelr",
+            "title": "Комедия",
+            "slug": "comedy",
+            "description": "Юмористические фильмы",
+            "createdAt": "2026-02-09T22:30:09.095Z",
+            "updatedAt": "2026-02-09T23:27:10.889Z",
+            "publishedAt": "2026-02-09T23:27:10.916Z"
+        },
+        {
+            "id": 69,
+            "documentId": "vovw3jugyirwli19k92ycws1",
+            "title": "Ужасы",
+            "slug": "horror",
+            "description": "Фильмы ужасов",
+            "createdAt": "2026-02-09T22:29:26.487Z",
+            "updatedAt": "2026-02-09T23:28:01.455Z",
+            "publishedAt": "2026-02-09T23:28:01.481Z"
+        },
+        {
+            "id": 70,
+            "documentId": "qmas5guye2inzkl8auro96uy",
+            "title": "Фантастика",
+            "slug": "sci-fi",
+            "description": "Научная фантастика",
+            "createdAt": "2026-02-09T22:30:35.670Z",
+            "updatedAt": "2026-02-09T23:28:20.143Z",
+            "publishedAt": "2026-02-09T23:28:20.167Z"
+        },
+        {
+            "id": 66,
+            "documentId": "g1wl8wm7ub1a5mbi6onn3wcm",
+            "title": "Драма",
+            "slug": "drama",
+            "description": "Серьёзные фильмы о жизни и чувствах",
+            "createdAt": "2026-02-09T22:28:59.307Z",
+            "updatedAt": "2026-02-09T23:26:53.452Z",
+            "publishedAt": "2026-02-09T23:26:53.487Z"
+        },
+        {
+            "id": 68,
+            "documentId": "wtipdi8tm1mvvfkcfjsvuc6g",
+            "title": "Мультфильм",
+            "slug": "animation",
+            "description": "Анимационные фильмы",
+            "createdAt": "2026-02-09T22:28:26.388Z",
+            "updatedAt": "2026-02-09T23:27:33.417Z",
+            "publishedAt": "2026-02-09T23:27:33.443Z"
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "page": 1,
+            "pageSize": 25,
+            "pageCount": 1,
+            "total": 6
+        }
+    }
+}
